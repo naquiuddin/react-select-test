@@ -10,6 +10,9 @@ const CreateLabel = ({ value, type }) => {
   );
 };
 
-CreateLabel.propTypes = {};
+CreateLabel.propTypes = {
+  value: PropTypes.string,
+  type: PropTypes.string
+};
 
 export default CreateLabel;

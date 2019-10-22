@@ -5,16 +5,8 @@ const ACTION_CONFIG = {
   SELECT_ACTION: 'select-option'
 };
 
-const options = ['BCB', 'PWC', 'McKinsey'];
-const parsedOptions = options.map(option => {
-  return {
-    value: ShortId.generate(),
-    label: option
-  };
-});
-
 export default pipe(
-  withState('options', 'setOptions', parsedOptions),
+  withState('label', 'setLabel', 'Select'),
   withState('isOpen', 'setIsOpen', false),
   withState('value', 'setValue', null),
   withHandlers({
@@ -23,10 +15,22 @@ export default pipe(
       setOptions([...options, newOption]);
       setValue(newOption);
     },
-    onChange: ({ value, setValue, setIsOpen }) => (newValue, actions) => {
+    onChange: ({ value, setLabel, setValue, setIsOpen, isMulti }) => (
+      newValue,
+      actions
+    ) => {
+      console.log(newValue);
       console.log('actions', actions);
       setValue(newValue);
-      if ((actions.action = ACTION_CONFIG.SELECT_ACTION)) setIsOpen(false);
+      if (actions.action === ACTION_CONFIG.SELECT_ACTION && !isMulti)
+        setIsOpen(false);
+      const label = isMulti
+        ? newValue.reduce((accumulator, { label }) => {
+            return !accumulator ? label : accumulator + ', ' + label;
+          }, '')
+        : newValue.label;
+      console.log(label);
+      setLabel(label);
     },
     toggleOpen: ({ setIsOpen, isOpen }) => () => {
       setIsOpen(!isOpen);

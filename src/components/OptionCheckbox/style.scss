@@ -1,0 +1,18 @@
+.option {
+  cursor: pointer;
+  .checkbox {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+    input {
+      width: auto;
+    }
+  }
+  .label {
+    flex: 1;
+  }
+}
+
+.focused {
+  background-color: grey;
+}
