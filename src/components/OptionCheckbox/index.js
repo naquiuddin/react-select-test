@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import './style.scss';
 
 const OptionCheckbox = props => {
@@ -29,10 +28,6 @@ const OptionCheckbox = props => {
       </div>
     </div>
   );
-};
-
-OptionCheckbox.propTypes = {
-  label: PropTypes.string
 };
 
 export default OptionCheckbox;

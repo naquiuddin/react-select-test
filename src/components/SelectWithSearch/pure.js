@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CreatableSelect from 'react-select/creatable';
-import CreateLabel from '../CreateLabel';
+import CreatableSelect from '../CreatableSelect';
 import SelectDropdown from '../DropdownContainer';
-import { components } from 'react-select';
-import OptionCheckbox from '../OptionCheckbox';
 
 const selectStyles = {
   control: provided => ({ ...provided, minWidth: 240, margin: 8 }),
@@ -21,35 +18,23 @@ const SelectWithSearchPure = ({
   isOpen,
   toggleOpen,
   onMenuClose,
-  isMulti
+  isMulti,
+  renderValue
 }) => {
-  const formatCreateLabel = inputValue => {
-    return <CreateLabel value={inputValue} type={type} />;
-  };
-  console.log('isMulti', isMulti);
-  const Option = isMulti ? OptionCheckbox : components.Option;
-
   return (
     <SelectDropdown isOpen={isOpen} label={label} toggleOpen={toggleOpen}>
       <CreatableSelect
-        isClearable={false}
-        controlShouldRenderValue={false}
+        renderValue={renderValue}
         isMulti={isMulti}
-        hideSelectedOptions={false}
-        placeholder="Search..."
-        isSearchable={true}
         menuIsOpen={isOpen}
-        onChange={onChange}
-        onCreateOption={onCreate}
         options={options}
         value={value}
+        placeholder="Search..."
+        onChange={onChange}
+        onCreateOption={onCreate}
         styles={selectStyles}
-        components={{
-          DropdownIndicator: null,
-          IndicatorSeparator: null,
-          Option
-        }}
-        formatCreateLabel={formatCreateLabel}
+        isClearable={true}
+        isSearchable={true}
       />
     </SelectDropdown>
   );

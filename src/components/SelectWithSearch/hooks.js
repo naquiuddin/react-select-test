@@ -12,25 +12,34 @@ export default pipe(
   withHandlers({
     onCreate: ({ options, setOptions, value, setValue }) => inputValue => {
       const newOption = { value: ShortId.generate(), label: inputValue };
+      console.log('newOption', newOption);
+      console.log(setOptions);
       setOptions([...options, newOption]);
       setValue(newOption);
     },
-    onChange: ({ value, setLabel, setValue, setIsOpen, isMulti }) => (
-      newValue,
-      actions
-    ) => {
-      console.log(newValue);
-      console.log('actions', actions);
+    onChange: ({
+      value,
+      setLabel,
+      setValue,
+      setIsOpen,
+      isMulti,
+      onValuesChange = () => {}
+    }) => (newValue, actions) => {
       setValue(newValue);
       if (actions.action === ACTION_CONFIG.SELECT_ACTION && !isMulti)
         setIsOpen(false);
-      const label = isMulti
-        ? newValue.reduce((accumulator, { label }) => {
-            return !accumulator ? label : accumulator + ', ' + label;
-          }, '')
-        : newValue.label;
-      console.log(label);
-      setLabel(label);
+      console.log(newValue);
+      if (newValue) {
+        const label = isMulti
+          ? newValue.reduce((accumulator, { label }) => {
+              return !accumulator ? label : accumulator + ', ' + label;
+            }, '')
+          : newValue.label;
+        setLabel(label);
+      } else {
+        setLabel('Select');
+      }
+      onValuesChange(newValue);
     },
     toggleOpen: ({ setIsOpen, isOpen }) => () => {
       setIsOpen(!isOpen);
