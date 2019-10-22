@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="clients">
       <h2>Clients</h2>
-      <SelectWithSearch />
+      <SelectWithSearch type="client" />
     </div>
   );
 }
